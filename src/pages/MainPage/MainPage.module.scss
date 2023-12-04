@@ -1,0 +1,14 @@
+@import '../../styles/vars';
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 30px;
+}
+
+.notes {
+  background-color: $white;
+  .title {
+    margin: 0;
+  }
+}

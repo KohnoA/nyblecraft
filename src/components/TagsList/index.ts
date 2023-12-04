@@ -1,0 +1,1 @@
+export { TagsList, TagsListMemo } from './TagsList';
