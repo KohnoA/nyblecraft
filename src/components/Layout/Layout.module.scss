@@ -1,0 +1,36 @@
+@import '../../styles/vars';
+
+.layout {
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+
+  height: auto;
+  min-height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &__icon {
+    color: $white;
+    font-size: 20px;
+  }
+
+  .text {
+    color: white;
+    margin: 0;
+    margin-bottom: 3px;
+  }
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
