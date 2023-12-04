@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface INote {
-  description: string;
+  note: string;
   tags: string[];
 }
 

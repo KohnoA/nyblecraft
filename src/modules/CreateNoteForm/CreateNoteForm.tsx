@@ -1,35 +1,43 @@
-import { useEffect, useCallback, useState, FormEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { useAppDispatch } from '@/store';
+import { addNote } from '@/store/slices/notesSlice';
 import { message, Input, Button, Form, Alert } from 'antd';
 import { FIND_TAGS } from '@/constants/regexps';
 import { TagsList } from '@/components/TagsList';
 import { FormHeaderMemo } from './components/FormHeader';
 import styles from './styles.module.scss';
 
+interface FormData {
+  note: string;
+}
+
+const INITIAL_TAGS_VALUE: string[] = [];
+
 export default function CreateNoteForm() {
-  const [form] = Form.useForm();
-  const newNote = Form.useWatch('note', form);
-  const [tags, setTags] = useState<string[]>([]);
+  const [form] = Form.useForm<FormData>();
+  const [tags, setTags] = useState<string[]>(INITIAL_TAGS_VALUE);
+  const dispatch = useAppDispatch();
 
-  const onFinish = (event: FormEvent) => {
-    console.log(event);
+  const onFinish = (data: FormData) => {
+    const { note } = data;
 
+    dispatch(addNote({ note, tags }));
     message.success('New note added!');
     form.resetFields();
+    setTags(INITIAL_TAGS_VALUE);
   };
 
   const onFinishFailed = () => message.error('Submit failed!');
 
-  const noteInputHanlder = useCallback((str: string) => {
-    const newTagsArr = str.match(FIND_TAGS) ?? [];
+  const noteInputHanlder = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const matchArr = Array.from(value.match(FIND_TAGS) ?? [], (tag) =>
+      tag.trim()
+    );
+    const uniqueTagsList = [...new Set(matchArr)];
 
-    setTags(Array.from(newTagsArr));
-  }, []);
-
-  useEffect(() => {
-    if (newNote) {
-      noteInputHanlder(newNote);
-    }
-  }, [noteInputHanlder, newNote]);
+    setTags(uniqueTagsList);
+  };
 
   return (
     <div className={styles.form}>
@@ -52,7 +60,10 @@ export default function CreateNoteForm() {
           label="Enter your note"
           rules={[{ required: true }, { type: 'string', min: 6 }]}
         >
-          <Input placeholder="I wanna go to #shop tomorrow" />
+          <Input
+            onChange={noteInputHanlder}
+            placeholder="I wanna go to #shop tomorrow"
+          />
         </Form.Item>
 
         {tags.length > 0 && <TagsList tags={tags} />}
