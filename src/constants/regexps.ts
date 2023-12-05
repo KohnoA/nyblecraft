@@ -1,0 +1,1 @@
+export const FIND_TAGS = /[#]\w+(\s|$)/g;

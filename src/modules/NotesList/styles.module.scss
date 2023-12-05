@@ -1,0 +1,30 @@
+@import '../../styles/vars';
+
+.notes {
+  background-color: $white;
+
+  .title {
+    margin: 0;
+  }
+}
+
+.tagList {
+  margin: 0;
+}
+
+.content {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-right: 24px;
+}
+
+.controls {
+  align-self: flex-start;
+
+  display: flex;
+  gap: 10px;
+}
