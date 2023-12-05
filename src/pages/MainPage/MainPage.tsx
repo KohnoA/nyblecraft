@@ -1,8 +1,8 @@
-import { Layout, List, Typography } from 'antd';
+import { Layout } from 'antd';
 import styles from './MainPage.module.scss';
 import CreateNoteForm from '@/modules/CreateNoteForm';
+import NotesList from '@/modules/NotesList';
 
-const { Title } = Typography;
 const { Content } = Layout;
 
 export default function MainPage() {
@@ -11,15 +11,7 @@ export default function MainPage() {
       <div className={`page container ${styles.wrapper}`}>
         <CreateNoteForm />
 
-        <List
-          className={styles.notes}
-          header={
-            <Title className={styles.title} level={4}>
-              Notes list
-            </Title>
-          }
-          bordered
-        />
+        <NotesList />
       </div>
     </Content>
   );
