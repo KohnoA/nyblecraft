@@ -19,10 +19,12 @@
   flex-direction: column;
   gap: 10px;
 
-  margin-right: 20px;
+  margin-right: 24px;
 }
 
-.buttons {
+.controls {
+  align-self: flex-start;
+
   display: flex;
   gap: 10px;
 }

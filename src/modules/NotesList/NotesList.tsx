@@ -1,10 +1,9 @@
-import { List, Typography, Button } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { List, Typography } from 'antd';
 import { useAppSelector } from '@/store';
-import styles from './NotesList.module.scss';
-import { TagsList } from '@/components/TagsList';
+import styles from './styles.module.scss';
+import NoteItem from './components/NoteItem';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export default function NotesList() {
   const notes = useAppSelector((state) => state.notes.list);
@@ -19,19 +18,7 @@ export default function NotesList() {
           Notes list
         </Title>
       }
-      renderItem={({ desc, tags }) => (
-        <List.Item>
-          <div className={styles.content}>
-            <Text>{desc}</Text>
-            <TagsList className={styles.tagList} tags={tags} />
-          </div>
-
-          <div className={styles.buttons}>
-            <Button type="primary" icon={<EditOutlined />} />
-            <Button type="primary" danger icon={<DeleteOutlined />} />
-          </div>
-        </List.Item>
-      )}
+      renderItem={(note) => <NoteItem data={note} />}
     />
   );
 }

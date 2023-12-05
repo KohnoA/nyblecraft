@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface INote {
-  desc: string;
-  tags: string[];
-}
+import { INote } from '@/types';
 
 interface InitialStateType {
   list: INote[];
@@ -20,7 +16,27 @@ export const notesSlice = createSlice({
     addNote(state, action: PayloadAction<INote>) {
       state.list.push(action.payload);
     },
+
+    removeNote(state, action: PayloadAction<number>) {
+      state.list = state.list.filter((tag) => tag.id !== action.payload);
+    },
+
+    editNote(
+      state,
+      action: PayloadAction<{ newDesc: string; id: number; newTags: string[] }>
+    ) {
+      const { newDesc, id, newTags } = action.payload;
+
+      state.list = state.list.map((note) => {
+        if (note.id === id && note.desc !== newDesc) {
+          note.desc = newDesc;
+          note.tags = newTags;
+        }
+
+        return note;
+      });
+    },
   },
 });
 
-export const { addNote } = notesSlice.actions;
+export const { addNote, removeNote, editNote } = notesSlice.actions;

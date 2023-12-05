@@ -2,10 +2,10 @@ import { useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '@/store';
 import { addNote } from '@/store/slices/notesSlice';
 import { message, Input, Button, Form, Alert } from 'antd';
-import { FIND_TAGS } from '@/constants/regexps';
 import { TagsList } from '@/components/TagsList';
 import { FormHeaderMemo } from './components/FormHeader';
 import styles from './styles.module.scss';
+import { getTagsFromString } from '@/helpers/getTagsFromString';
 
 interface FormData {
   note: string;
@@ -21,7 +21,7 @@ export default function CreateNoteForm() {
   const onFinish = (data: FormData) => {
     const { note } = data;
 
-    dispatch(addNote({ desc: note, tags }));
+    dispatch(addNote({ id: Date.now(), desc: note, tags }));
     message.success('New note added!');
     form.resetFields();
     setTags(INITIAL_TAGS_VALUE);
@@ -31,12 +31,8 @@ export default function CreateNoteForm() {
 
   const noteInputHanlder = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const matchArr = Array.from(value.match(FIND_TAGS) ?? [], (tag) =>
-      tag.trim()
-    );
-    const uniqueTagsList = [...new Set(matchArr)];
 
-    setTags(uniqueTagsList);
+    setTags(getTagsFromString(value));
   };
 
   return (
