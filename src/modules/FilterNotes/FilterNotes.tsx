@@ -1,12 +1,13 @@
 import { useAppSelector, useAppDispatch } from '@/store';
 import { Typography, Select } from 'antd';
 import styles from './FilterNotes.module.scss';
-import { selectAllTags } from '@/store/selectors';
+import { selectAllTags, selectFilter } from '@/store/selectors';
 import { setFilter } from '@/store/slices/filterSlice';
 
 const { Title, Paragraph } = Typography;
 
 export default function FilterNotes() {
+  const filters = useAppSelector(selectFilter);
   const options = useAppSelector(selectAllTags);
   const dispatch = useAppDispatch();
 
@@ -33,6 +34,7 @@ export default function FilterNotes() {
           allowClear
           placeholder="#shop"
           onChange={onChangeSelectHanlder}
+          defaultValue={filters}
           options={options}
         />
       </div>
