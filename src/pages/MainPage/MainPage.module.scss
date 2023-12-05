@@ -1,6 +1,14 @@
+@import '../../styles/vars';
+
 .wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   align-items: start;
   gap: 30px;
+}
+
+@media screen and (max-width: $tablet) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
 }
