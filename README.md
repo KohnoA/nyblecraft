@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Notes App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The application was created during a test task for ***Nyblecraft***
 
-Currently, two official plugins are available:
+Deploy: https://admirable-vacherin-d099c5.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To start the project, follow these steps:
 
-## Expanding the ESLint configuration
+`git clone https://github.com/KohnoA/nyblecraft.git`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+`cd product-lab`
 
-- Configure the top-level `parserOptions` property like this:
+`npm install`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+`npm run dev`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Task: Разработать одностраничное приложение на React.js (SPA): текстовый редактор заметок с тегами.
+
+Функционал:
+1. Создание, редактирование, удаление заметок;
+2. Просмотр списка заметок;
+3. Во время создания и редактирования заметки пользователь может создавать теги, используя символ # (Например, пользователь вводит текст “I wanna go to #shop tomorrow”. По мере ввода должен создаться соответствующий тег и отобразиться в списке под текстовым полем. При редактировании заметки все слова, соответствующие тегам, должны подсвечиваться, т.e. “I wanna go to #shop tomorrow”);
+4. Фильтр заметок по тегу - пользователь должен иметь возможность выбрать один или несколько тегов из существующих и по ним отфильтровать список заметок;
+5. При перезагрузке страницы заметки должны сохраняться (Например, хранить в IndexedDb).
+
+Технические требования:
+1. React.js hooks;
+2. Использование TypeScript;
+3. Использование UI библиотек (Например, Material UI, Ant design);
+4. Использовать стейт менеджер (Например, Redux, MobX, прочее);
+5. Залить на гит (Публичный репозиторий);
+6. Залить на хост (Netlify, Github pages, прочее).
