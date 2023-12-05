@@ -11,7 +11,7 @@
   &__header {
     padding: 12px 24px;
     border-block-end: 1px solid rgba(5, 5, 5, 0.06);
-  
+
     .title {
       margin: 0;
     }
@@ -28,4 +28,10 @@
 
 .select {
   width: 100%;
+}
+
+.tag {
+  color: $blue;
+  font-style: italic;
+  font-weight: 600;
 }

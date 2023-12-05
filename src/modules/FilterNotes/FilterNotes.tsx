@@ -23,7 +23,9 @@ export default function FilterNotes() {
       </div>
 
       <div className={styles.filters__body}>
-        <Paragraph className={styles.label}>Choose tags</Paragraph>
+        <Paragraph className={styles.label}>
+          Select <span className={styles.tag}>#tags</span> to sort your notes:
+        </Paragraph>
 
         <Select
           className={styles.select}

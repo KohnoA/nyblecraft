@@ -14,12 +14,8 @@ export const filterSlice = createSlice({
   reducers: {
     setFilter(state, action: PayloadAction<string[]>) {
       state.tags = action.payload;
-    },
-
-    clearFilter(state) {
-      state.tags = initialState.tags;
-    },
+    }
   },
 });
 
-export const { setFilter, clearFilter } = filterSlice.actions;
+export const { setFilter } = filterSlice.actions;

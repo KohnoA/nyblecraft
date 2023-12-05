@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '@/store';
 import { addNote } from '@/store/slices/notesSlice';
-import { message, Input, Button, Form, Alert } from 'antd';
+import { message, Input, Button, Form, Alert, Typography } from 'antd';
 import { TagsList } from '@/components/TagsList';
 import { FormHeaderMemo } from './components/FormHeader';
 import styles from './styles.module.scss';
@@ -48,7 +48,12 @@ export default function CreateNoteForm() {
       >
         <Alert
           className={styles.alert}
-          message="You can designate #tags in your notes so you can conveniently filter them later."
+          message={
+            <Typography.Text>
+              You can designate <span className={styles.tag}>#tags</span> in
+              your notes so you can conveniently filter them later.
+            </Typography.Text>
+          }
         />
 
         <Form.Item
