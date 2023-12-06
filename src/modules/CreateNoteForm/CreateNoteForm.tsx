@@ -1,11 +1,13 @@
 import { useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '@/store';
 import { addNote } from '@/store/slices/notesSlice';
-import { message, Input, Button, Form, Alert, Typography } from 'antd';
+import { message, Input, Button, Form } from 'antd';
 import { TagsList } from '@/components/TagsList';
 import { FormHeaderMemo } from './components/FormHeader';
 import styles from './styles.module.scss';
 import { getTagsFromString } from '@/helpers/getTagsFromString';
+import { FormAlertMemo } from './components/FormAlert';
+import { areArraysIdentical } from '@/helpers/areArraysIdentical';
 
 interface FormData {
   note: string;
@@ -31,8 +33,9 @@ export default function CreateNoteForm() {
 
   const noteInputHanlder = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    const newTagsArr = getTagsFromString(value);
 
-    setTags(getTagsFromString(value));
+    if (!areArraysIdentical(tags, newTagsArr)) setTags(newTagsArr);
   };
 
   return (
@@ -46,15 +49,7 @@ export default function CreateNoteForm() {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Alert
-          className={styles.alert}
-          message={
-            <Typography.Text>
-              You can designate <span className={styles.tag}>#tags</span> in
-              your notes so you can conveniently filter them later.
-            </Typography.Text>
-          }
-        />
+        <FormAlertMemo />
 
         <Form.Item
           name="note"
@@ -64,6 +59,7 @@ export default function CreateNoteForm() {
           <Input
             onChange={noteInputHanlder}
             placeholder="I wanna go to #shop tomorrow"
+            allowClear
           />
         </Form.Item>
 
