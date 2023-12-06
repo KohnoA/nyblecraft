@@ -21,6 +21,10 @@ export const notesSlice = createSlice({
       state.list = state.list.filter((tag) => tag.id !== action.payload);
     },
 
+    removeAllNotes(state) {
+      state.list = initialState.list;
+    },
+
     editNote(
       state,
       action: PayloadAction<{ newDesc: string; id: number; newTags: string[] }>
@@ -39,4 +43,4 @@ export const notesSlice = createSlice({
   },
 });
 
-export const { addNote, removeNote, editNote } = notesSlice.actions;
+export const { addNote, removeNote, editNote, removeAllNotes } = notesSlice.actions;
