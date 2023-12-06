@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import { useAppDispatch } from '@/store';
 import { INote } from '@/types';
-import { List, Input, Button } from 'antd';
+import { List, Input, Button, message } from 'antd';
 import { DeleteOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 import { editNote, removeNote } from '@/store/slices/notesSlice';
 import { ParagraphWithTagsMemo } from '@/components/ParagraphWithTags';
@@ -25,13 +25,19 @@ export default function NoteItem({ id, desc, tags }: NoteItemProps) {
   const editModeHanlder = () => {
     if (isEditMode) {
       if (newDesc.length === 0) removeNoteHandler();
-      else dispatch(editNote({ id, newDesc, newTags }));
+      else if (newDesc !== desc) {
+        dispatch(editNote({ id, newDesc, newTags }));
+        message.success('Note successfully modified');
+      }
     }
 
     setIsEditMode((prev) => !prev);
   };
 
-  const removeNoteHandler = () => dispatch(removeNote(id));
+  const removeNoteHandler = () => {
+    dispatch(removeNote(id));
+    message.warning(`Note deleted!`);
+  };
 
   const editNoteHanlder = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
