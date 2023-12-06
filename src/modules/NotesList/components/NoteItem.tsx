@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useAppDispatch } from '@/store';
 import { INote } from '@/types';
 import { List, Input, Button, message } from 'antd';
@@ -8,6 +8,7 @@ import { ParagraphWithTagsMemo } from '@/components/ParagraphWithTags';
 import { getTagsFromString } from '@/helpers/getTagsFromString';
 import { TagsList } from '@/components/TagsList';
 import styles from '../styles.module.scss';
+import { areArraysIdentical } from '@/helpers/areArraysIdentical';
 
 type NoteItemProps = INote;
 
@@ -24,9 +25,11 @@ export default function NoteItem({ id, desc, tags }: NoteItemProps) {
 
   const editModeHanlder = () => {
     if (isEditMode) {
-      if (newDesc.length === 0) removeNoteHandler();
-      else if (newDesc !== desc) {
-        dispatch(editNote({ id, newDesc, newTags }));
+      const trimDesc = newDesc.trim();
+
+      if (trimDesc.length === 0) removeNoteHandler();
+      else if (trimDesc !== desc) {
+        dispatch(editNote({ id, newDesc: trimDesc, newTags }));
         message.success('Note successfully modified');
       }
     }
@@ -41,13 +44,13 @@ export default function NoteItem({ id, desc, tags }: NoteItemProps) {
 
   const editNoteHanlder = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    const tagsGetedFromString = getTagsFromString(value);
 
-    setNewTags(getTagsFromString(value));
+    if (!areArraysIdentical(newTags, tagsGetedFromString)) {
+      setNewTags(tagsGetedFromString);
+    }
+
     setNewDesc(value);
-  };
-
-  const inputKeyDownHanlder = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.code === 'Enter') editModeHanlder();
   };
 
   return (
@@ -57,11 +60,11 @@ export default function NoteItem({ id, desc, tags }: NoteItemProps) {
           <Input
             defaultValue={newDesc}
             onChange={editNoteHanlder}
-            onKeyDown={inputKeyDownHanlder}
+            onPressEnter={editModeHanlder}
             autoFocus
           />
         ) : (
-          <ParagraphWithTagsMemo string={newDesc} tags={newTags} />
+          <ParagraphWithTagsMemo string={newDesc} />
         )}
         <TagsList className={styles.tagList} tags={newTags} />
       </div>

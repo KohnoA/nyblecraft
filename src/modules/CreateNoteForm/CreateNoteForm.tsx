@@ -23,7 +23,7 @@ export default function CreateNoteForm() {
   const onFinish = (data: FormData) => {
     const { note } = data;
 
-    dispatch(addNote({ id: Date.now(), desc: note, tags }));
+    dispatch(addNote({ id: Date.now(), desc: note.trim(), tags }));
     message.success('New note added!');
     form.resetFields();
     setTags(INITIAL_TAGS_VALUE);
