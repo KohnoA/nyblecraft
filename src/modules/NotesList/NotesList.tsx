@@ -1,10 +1,9 @@
-import { List, Typography } from 'antd';
+import { List } from 'antd';
 import { useAppSelector } from '@/store';
 import styles from './styles.module.scss';
 import NoteItem from './components/NoteItem';
 import { selectNotesByFilter } from '@/store/selectors';
-
-const { Title } = Typography;
+import ListHeader from './components/ListHeader';
 
 export default function NotesList() {
   const notes = useAppSelector(selectNotesByFilter);
@@ -14,12 +13,8 @@ export default function NotesList() {
       className={styles.notes}
       dataSource={notes}
       bordered
-      header={
-        <Title className={styles.title} level={4}>
-          Notes list
-        </Title>
-      }
-      renderItem={(note) => <NoteItem data={note} />}
+      header={<ListHeader />}
+      renderItem={(note) => <NoteItem {...note} />}
     />
   );
 }

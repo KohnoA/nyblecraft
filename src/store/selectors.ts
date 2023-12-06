@@ -6,8 +6,9 @@ export const selectFilter = (state: RootState) => state.filter.tags;
 
 export const selectAllTags = createSelector(selectAllNotes, (allNotes) => {
   const allTagsArr = allNotes.map((item) => item.tags).flat();
+  const uniqueTagsArr = [...new Set(allTagsArr)];
 
-  return allTagsArr.map((tag) => ({ value: tag, label: tag }));
+  return uniqueTagsArr.map((tag) => ({ value: tag, label: tag }));
 });
 
 export const selectNotesByFilter = createSelector(

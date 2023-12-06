@@ -3,25 +3,25 @@ import { Typography } from 'antd';
 import { FIND_TAGS } from '@/constants/regexps';
 import styles from './ParagraphWithTags.module.scss';
 
-const { Text } = Typography;
+const { Paragraph } = Typography;
 
 interface ParagraphWithTags {
   string: string;
-  tags: string[];
 }
 
 const SEPARATOR = '|~|';
+const TAG_DESIGNATION = '#';
 
-export function ParagraphWithTags({ string, tags }: ParagraphWithTags) {
-  const testFunc = () => {
+export function ParagraphWithTags({ string }: ParagraphWithTags) {
+  const getMarkupFromString = () => {
     const arr = string
       .replace(FIND_TAGS, (match) => `${SEPARATOR}${match.trim()}${SEPARATOR} `)
       .split(SEPARATOR);
 
     return (
-      <Text>
+      <Paragraph className={styles.paragraph}>
         {arr.map((item, index) => {
-          if (tags.includes(item)) {
+          if (item.includes(TAG_DESIGNATION)) {
             return (
               <span key={index} className={styles.tag}>
                 {item}
@@ -31,11 +31,11 @@ export function ParagraphWithTags({ string, tags }: ParagraphWithTags) {
             return item;
           }
         })}
-      </Text>
+      </Paragraph>
     );
   };
 
-  return testFunc();
+  return getMarkupFromString();
 }
 
 export const ParagraphWithTagsMemo = memo(ParagraphWithTags);

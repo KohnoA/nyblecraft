@@ -1,5 +1,9 @@
 @import '../../styles/vars';
 
+.paragraph {
+  margin: 0 !important;
+}
+
 .tag {
   color: $blue;
   font-style: italic;

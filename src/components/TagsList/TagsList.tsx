@@ -8,6 +8,10 @@ interface TagsListProps {
 }
 
 export function TagsList({ className, tags }: TagsListProps) {
+  if (tags.length === 0) {
+    return null;
+  }
+
   return (
     <div className={`${styles.tagsList} ${className ?? ''}`}>
       <Space size={[0, 'small']} wrap>
