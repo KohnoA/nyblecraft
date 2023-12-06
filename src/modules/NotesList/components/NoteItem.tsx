@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, KeyboardEvent } from 'react';
+import { useState, ChangeEvent, KeyboardEvent, useEffect } from 'react';
 import { useAppDispatch } from '@/store';
 import { INote } from '@/types';
 import { List, Input, Button } from 'antd';
@@ -9,26 +9,26 @@ import { getTagsFromString } from '@/helpers/getTagsFromString';
 import { TagsList } from '@/components/TagsList';
 import styles from '../styles.module.scss';
 
-interface NoteItemProps {
-  data: INote;
-}
+type NoteItemProps = INote;
 
-export default function NoteItem({ data }: NoteItemProps) {
-  const { id, desc, tags } = data;
-  const [newTags, setNewTags] = useState<string[]>([]);
+export default function NoteItem({ id, desc, tags }: NoteItemProps) {
+  const [newTags, setNewTags] = useState<string[]>(tags);
+  const [newDesc, setNewDesc] = useState<string>(desc);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [newNoteDesc, setNewNoteDesc] = useState<string>('');
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setNewTags(tags);
+    setNewDesc(desc);
+  }, [desc, tags]);
 
   const editModeHanlder = () => {
     if (isEditMode) {
-      dispatch(editNote({ id, newDesc: newNoteDesc, newTags }));
-      setIsEditMode(false);
-    } else {
-      setNewNoteDesc(desc);
-      setNewTags(tags);
-      setIsEditMode(true);
+      if (newDesc.length === 0) removeNoteHandler();
+      else dispatch(editNote({ id, newDesc, newTags }));
     }
+
+    setIsEditMode((prev) => !prev);
   };
 
   const removeNoteHandler = () => dispatch(removeNote(id));
@@ -37,7 +37,7 @@ export default function NoteItem({ data }: NoteItemProps) {
     const value = event.target.value;
 
     setNewTags(getTagsFromString(value));
-    setNewNoteDesc(value);
+    setNewDesc(value);
   };
 
   const inputKeyDownHanlder = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -49,18 +49,15 @@ export default function NoteItem({ data }: NoteItemProps) {
       <div className={styles.content}>
         {isEditMode ? (
           <Input
-            defaultValue={desc}
+            defaultValue={newDesc}
             onChange={editNoteHanlder}
             onKeyDown={inputKeyDownHanlder}
             autoFocus
           />
         ) : (
-          <ParagraphWithTagsMemo string={desc} tags={tags} />
+          <ParagraphWithTagsMemo string={newDesc} tags={newTags} />
         )}
-        <TagsList
-          className={styles.tagList}
-          tags={newTags.length === 0 ? tags : newTags}
-        />
+        <TagsList className={styles.tagList} tags={newTags} />
       </div>
 
       <div className={styles.controls}>

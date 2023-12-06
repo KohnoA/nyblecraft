@@ -19,7 +19,7 @@ export default function NotesList() {
           Notes list
         </Title>
       }
-      renderItem={(note) => <NoteItem data={note} />}
+      renderItem={(note) => <NoteItem {...note} />}
     />
   );
 }
