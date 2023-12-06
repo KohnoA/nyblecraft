@@ -63,7 +63,7 @@ export default function CreateNoteForm() {
           />
         </Form.Item>
 
-        {tags.length > 0 && <TagsList tags={tags} />}
+        <TagsList tags={tags} />
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
