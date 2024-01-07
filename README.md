@@ -6,13 +6,12 @@ Deploy: https://admirable-vacherin-d099c5.netlify.app/
 
 To start the project, follow these steps:
 
-`git clone https://github.com/KohnoA/nyblecraft.git`
-
-`cd product-lab`
-
-`npm install`
-
-`npm run dev`
+```
+1. git clone https://github.com/KohnoA/nyblecraft.git
+2. cd nyblecraft
+3. npm install
+4. npm run dev
+```
 
 Task: Разработать одностраничное приложение на React.js (SPA): текстовый редактор заметок с тегами.
 
